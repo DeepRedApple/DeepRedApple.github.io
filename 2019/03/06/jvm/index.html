@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="DeepRedApple">
 <meta property="og:description" content="Java生产环境下性能监控与调优详解，主要讲解的是性能监控、调优、JVM详解、代码层优化">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/03/06/images/JVM的内存结构.png">
-<meta property="og:image" content="http://yoursite.com/2019/03/06/images/webwxgetmsgimg.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/03/06/images/JVM的内存结构.png">
-<meta property="og:updated_time" content="2019-03-06T15:14:39.015Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/JVM的内存结构.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/webwxgetmsgimg.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/JVM的内存结构.png">
+<meta property="og:updated_time" content="2019-03-06T16:02:30.996Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm">
 <meta name="twitter:description" content="Java生产环境下性能监控与调优详解，主要讲解的是性能监控、调优、JVM详解、代码层优化">
-<meta name="twitter:image" content="http://yoursite.com/2019/03/06/images/JVM的内存结构.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/06/jvm/JVM的内存结构.png">
 
 
 
@@ -201,26 +201,6 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
           </a>
         </li>
       
@@ -398,7 +378,7 @@
 <p>FGC、FGCT：FullGCC的次数和时间</p>
 <p>GCT：总的GC时间</p>
 </blockquote>
-<p><img src="../images/JVM的内存结构.png" alt="JVM的内存结构"></p>
+<p><img src="/2019/03/06/jvm/JVM的内存结构.png" alt="JVM的内存结构"></p>
 <ol>
 <li><p>JIT编译</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# jps -l</span><br><span class="line">1472 org.apache.catalina.startup.Bootstrap</span><br><span class="line">1570 org.elasticsearch.bootstrap.Elasticsearch</span><br><span class="line">1679 sun.tools.jps.Jps</span><br><span class="line">[root@localhost /]# jstat -compiler 1472</span><br><span class="line">Compiled Failed Invalid   Time   FailedType FailedMethod</span><br><span class="line">    1734      0       0     1.70          0</span><br></pre></td></tr></table></figure>
@@ -428,7 +408,7 @@
 <p><strong>TIMED_WAITING：</strong>超时等待</p>
 <p><strong>TERMINATED：</strong>终止</p>
 </blockquote>
-<p><img src="../images/webwxgetmsgimg.jpg" alt="线程状态转换流程"></p>
+<p><img src="/2019/03/06/jvm/webwxgetmsgimg.jpg" alt="线程状态转换流程"></p>
 <h2 id="基于JVisualVM的可视化监控"><a href="#基于JVisualVM的可视化监控" class="headerlink" title="基于JVisualVM的可视化监控"></a>基于JVisualVM的可视化监控</h2><h3 id="监控本地Java进程"><a href="#监控本地Java进程" class="headerlink" title="监控本地Java进程"></a>监控本地Java进程</h3><blockquote>
 <p>D:\Java\jdk1.8.0_151\bin\jvisualvm.exe，可以查看本地的进程信息，同时也可以使用插件来进行查看，不过要和JDK的版本信息相对应使用，例如:Visual GC，可以查看内存的结构分布。通过图形化方式查看</p>
 </blockquote>
@@ -564,7 +544,7 @@
 </li>
 </ul>
 </blockquote>
-<p><img src="../images/JVM的内存结构.png" alt="JVM内存结构"></p>
+<p><img src="/2019/03/06/jvm/JVM的内存结构.png" alt="JVM内存结构"></p>
 <ul>
 <li>MetaSpace=Class、Package、Method、Field、字节码、常量池、符号引用等等</li>
 <li>CCS：32位指针的Class</li>
@@ -673,7 +653,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives">
               
                   <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">posts</span>
@@ -687,10 +667,10 @@
               
               
               <div class="site-state-item site-state-tags">
-                
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">tags</span>
-                
+                </a>
               </div>
             
 
