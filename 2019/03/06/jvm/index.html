@@ -82,7 +82,7 @@
 <meta name="description" content="Java生产环境下性能监控与调优详解，主要讲解的是性能监控、调优、JVM详解、代码层优化">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jvm">
+<meta property="og:title" content="Java性能监控与调优详解">
 <meta property="og:url" content="http://yoursite.com/2019/03/06/jvm/index.html">
 <meta property="og:site_name" content="DeepRedApple">
 <meta property="og:description" content="Java生产环境下性能监控与调优详解，主要讲解的是性能监控、调优、JVM详解、代码层优化">
@@ -90,9 +90,14 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/JVM的内存结构.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/webwxgetmsgimg.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/JVM的内存结构.png">
-<meta property="og:updated_time" content="2019-03-06T16:02:30.996Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/垃圾收集器组合.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/Parallel算法描述过程.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/CMS算法描述过程.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/CMS缺点.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/06/jvm/G1拉机器收集器图解.png">
+<meta property="og:updated_time" content="2019-03-08T15:54:15.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jvm">
+<meta name="twitter:title" content="Java性能监控与调优详解">
 <meta name="twitter:description" content="Java生产环境下性能监控与调优详解，主要讲解的是性能监控、调优、JVM详解、代码层优化">
 <meta name="twitter:image" content="http://yoursite.com/2019/03/06/jvm/JVM的内存结构.png">
 
@@ -130,7 +135,7 @@
 
 
 
-  <title>jvm | DeepRedApple</title>
+  <title>Java性能监控与调优详解 | DeepRedApple</title>
   
 
 
@@ -254,7 +259,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">jvm</h1>
+          <h1 class="post-title" itemprop="name headline">Java性能监控与调优详解</h1>
         
 
         <div class="post-meta">
@@ -308,7 +313,7 @@
 <p>Java生产环境下性能监控与调优详解，主要讲解的是性能监控、调优、JVM详解、代码层优化</p>
 </blockquote>
 <a id="more"></a>
-<h1 id="Java生产环境下性能监控与调优详解"><a href="#Java生产环境下性能监控与调优详解" class="headerlink" title="Java生产环境下性能监控与调优详解"></a>Java生产环境下性能监控与调优详解</h1><h2 id="基于JDK命令行工具的监控"><a href="#基于JDK命令行工具的监控" class="headerlink" title="基于JDK命令行工具的监控"></a>基于JDK命令行工具的监控</h2><h3 id="JVM参数类型"><a href="#JVM参数类型" class="headerlink" title="JVM参数类型"></a>JVM参数类型</h3><h4 id="标准参数"><a href="#标准参数" class="headerlink" title="标准参数"></a>标准参数</h4><ol>
+<h2 id="基于JDK命令行工具的监控"><a href="#基于JDK命令行工具的监控" class="headerlink" title="基于JDK命令行工具的监控"></a>基于JDK命令行工具的监控</h2><h3 id="JVM参数类型"><a href="#JVM参数类型" class="headerlink" title="JVM参数类型"></a>JVM参数类型</h3><h4 id="标准参数"><a href="#标准参数" class="headerlink" title="标准参数"></a>标准参数</h4><ol>
 <li>-help</li>
 <li>-server  -client</li>
 <li>-version  -showversion</li>
@@ -531,7 +536,10 @@
  <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sendfile on; <span class="comment">#减少文件在应用和内核之间拷贝</span></span><br><span class="line">tcp_nopush on; <span class="comment">#当数据包达到一定大小再发送</span></span><br><span class="line">tcp_nodelay off; <span class="comment">#有数据随时发送</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="JVM层GC调优"><a href="#JVM层GC调优" class="headerlink" title="JVM层GC调优"></a>JVM层GC调优</h2><h3 id="JVM的内存结构"><a href="#JVM的内存结构" class="headerlink" title="JVM的内存结构"></a>JVM的内存结构</h3><h4 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h4><blockquote>
+<h2 id="JVM层GC调优"><a href="#JVM层GC调优" class="headerlink" title="JVM层GC调优"></a>JVM层GC调优</h2><blockquote>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/toc.html" target="_blank" rel="noopener">GC调优官方指南</a></p>
+</blockquote>
+<h3 id="JVM的内存结构"><a href="#JVM的内存结构" class="headerlink" title="JVM的内存结构"></a>JVM的内存结构</h3><h4 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h4><blockquote>
 <p>分为方法区、堆、虚拟机栈、本地方法栈程序计数器 </p>
 <ul>
 <li>程序计数器PC Register：JVM支持多线程同时运行，每个线程都有自己的PC Register，线程正在执行的方法叫当前方法，如果是Java代码，PC Register里面存放就是当前正在执行的指令的地址，如果是C代码，则为空</li>
@@ -550,7 +558,237 @@
 <li>CCS：32位指针的Class</li>
 <li>CodeCache：JIT编译后的本地代码、JNI所使用的C代码</li>
 </ul>
-<h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><h3 id="可视化GC日志分析工具"><a href="#可视化GC日志分析工具" class="headerlink" title="可视化GC日志分析工具"></a>可视化GC日志分析工具</h3><h3 id="Tomcat的GC调优实战"><a href="#Tomcat的GC调优实战" class="headerlink" title="Tomcat的GC调优实战"></a>Tomcat的GC调优实战</h3><h2 id="Java代码层优化"><a href="#Java代码层优化" class="headerlink" title="Java代码层优化"></a>Java代码层优化</h2><h3 id="jvm字节码指令与javap"><a href="#jvm字节码指令与javap" class="headerlink" title="jvm字节码指令与javap"></a>jvm字节码指令与javap</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# javap</span><br><span class="line">用法: javap &lt;options&gt; &lt;classes&gt;</span><br><span class="line">其中, 可能的选项包括:</span><br><span class="line">  -help  --help  -?        输出此用法消息</span><br><span class="line">  -version                 版本信息</span><br><span class="line">  -v  -verbose             输出附加信息</span><br><span class="line">  -l                       输出行号和本地变量表</span><br><span class="line">  -public                  仅显示公共类和成员</span><br><span class="line">  -protected               显示受保护的/公共类和成员</span><br><span class="line">  -package                 显示程序包/受保护的/公共类</span><br><span class="line">                           和成员 (默认)</span><br><span class="line">  -p  -private             显示所有类和成员</span><br><span class="line">  -c                       对代码进行反汇编</span><br><span class="line">  -s                       输出内部类型签名</span><br><span class="line">  -sysinfo                 显示正在处理的类的</span><br><span class="line">                           系统信息 (路径, 大小, 日期, MD5 散列)</span><br><span class="line">  -constants               显示最终常量</span><br><span class="line">  -classpath &lt;path&gt;        指定查找用户类文件的位置</span><br><span class="line">  -cp &lt;path&gt;               指定查找用户类文件的位置</span><br><span class="line">  -bootclasspath &lt;path&gt;    覆盖引导类文件的位置</span><br></pre></td></tr></table></figure>
+<h4 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h4><ul>
+<li>-Xms -Xmx  最小堆内存，最大堆内存</li>
+<li>-XX:NewSize -XX:MaxNewSize Young区大小，Young区最大大小</li>
+<li>-XX:NewRatio  -XX:SurvivorRatio  Young区和Old区的比率大小  Eden和Survivor区的比率大小 </li>
+<li>-XX:MatespaceSize -XX:MaxMatespaceSize  指定Matespace大小 </li>
+<li>-XX:+UseComperssedClassPointer  是否启用压缩的类指针，默认为1G大小 </li>
+<li>-XX:CompressedClassSpaceSize 设置压缩类空间的大小</li>
+<li>-XX:InitialCodeCacheSize 指定CodeCache的大小</li>
+<li>-XX:ReservedCodeCacheSize 指定CodeCache的最大的大小</li>
+</ul>
+<h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><blockquote>
+<p>思想：枚举根节点，做可达性分析</p>
+<p>根节点：类加载器、Thread、虚拟机栈的本地变量表、static成员、常量引用、本地方法栈的变量等等 </p>
+</blockquote>
+<h4 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h4><ul>
+<li>标记清除<ul>
+<li>分为标记和清除两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收所有</li>
+<li>缺点：效率不高（标记和清除效率不高）、容易产生碎片 （碎片多导致GC）</li>
+</ul>
+</li>
+<li>复制<ul>
+<li>将可用内存按容量划分为两个大小相同的两块，每次只使用其中的一块。当其中的一块的内存使用完了，就把还存活的对象复制到另一个内存中，然后再一次清除这个已经使用的所有内存</li>
+<li>优缺点：实现简单、运行高效、但是空间利用率低，需要占用两块相同的内存空间</li>
+</ul>
+</li>
+<li>标记整理<ul>
+<li>标记过程与“标记清除”算法一样，但是后续的过程中不是直接清除对象，而是把所有的存活的对象都向一端进行移动，然后清理掉这以外的内存空间 </li>
+<li>优缺点：没有产生内存碎片，但是整理优化比较耗时</li>
+</ul>
+</li>
+</ul>
+<h4 id="分代垃圾回收"><a href="#分代垃圾回收" class="headerlink" title="分代垃圾回收"></a>分代垃圾回收</h4><ul>
+<li>Young区使用复制算法</li>
+<li>Old区采用标记清除或者标记整理算法</li>
+</ul>
+<h4 id="对象分配"><a href="#对象分配" class="headerlink" title="对象分配"></a>对象分配</h4><ul>
+<li>对象优先分配在Eden区分配</li>
+<li>大对象直接进入Old区：-XX：PretenureSizeThreshold  指定多大的大对象直接进入Old区</li>
+<li>长期存活的对象进入Old区：-XX：MaxTenuringThreshold -XX：+PrintTenuringDistribution -XX：TargetSurvivorRatio</li>
+</ul>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><ul>
+<li>串行收集器Serial：Serial、Serial Old</li>
+<li>并行收集器Parallel：Parallel Scavenge、Parallel Old，吞吐量优先</li>
+<li>并发收集器Concurrent：CMS、G1，停顿时间优先</li>
+</ul>
+<h4 id="并行VS并发"><a href="#并行VS并发" class="headerlink" title="并行VS并发"></a>并行VS并发</h4><ul>
+<li>并行Parallel：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。适合科学计算、后台处理等弱交互的场景</li>
+<li>并发Concurrent：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替执行），垃圾收集线程在执行的时候不会停顿用户线程的执行。适合对响应时间有要求的场景，比如Web</li>
+</ul>
+<h4 id="停顿时间VS吞吐量"><a href="#停顿时间VS吞吐量" class="headerlink" title="停顿时间VS吞吐量"></a>停顿时间VS吞吐量</h4><ul>
+<li>停顿时间：垃圾收集器做垃圾回收中断应用的执行时间。-XX：MaxGCPauseMillis</li>
+<li>吞吐量：花在垃圾收集的时间和花在应用时间的占比。-XX：GCTimeRatio=<n>, 垃圾收集时间占：1/1+n</n></li>
+</ul>
+<h4 id="串行收集器"><a href="#串行收集器" class="headerlink" title="串行收集器"></a>串行收集器</h4><ul>
+<li>-XX：+UseSerialGC  -XX：+UseSerialOldGC</li>
+</ul>
+<h4 id="并行收集器"><a href="#并行收集器" class="headerlink" title="并行收集器"></a>并行收集器</h4><ul>
+<li>吞吐量优先</li>
+<li>-XX：+UseParallelGC  -XX：+UseParallelOldGC</li>
+<li>在Serve模式下，这是默认的垃圾收集器 </li>
+</ul>
+<h4 id="并发收集器"><a href="#并发收集器" class="headerlink" title="并发收集器"></a>并发收集器</h4><ul>
+<li>响应时间优先：</li>
+<li>CMS：-XX：+UseConcMarkSweepGC  -XX：+UseParNewGC </li>
+<li>G1：-XX：+UseG1GC</li>
+</ul>
+<h4 id="垃圾收集器搭配"><a href="#垃圾收集器搭配" class="headerlink" title="垃圾收集器搭配"></a>垃圾收集器搭配</h4><blockquote>
+<p>两个标准：</p>
+<ul>
+<li>吞吐量=运行时间/总时间   关注GC耗时</li>
+<li>停顿时间 关注每次GC造成的应用暂停</li>
+</ul>
+</blockquote>
+<p><img src="/2019/03/06/jvm/垃圾收集器组合.png" alt="垃圾收集器组合"></p>
+<blockquote>
+<p>下面是Old区，上面是Young区，在JDK8中，无论是Young还是Old区，都可以使用G1垃圾收集器（JDK8中才有使用G1垃圾收集器） </p>
+</blockquote>
+<h5 id="如何选择垃圾收集器"><a href="#如何选择垃圾收集器" class="headerlink" title="如何选择垃圾收集器"></a>如何选择垃圾收集器</h5><blockquote>
+<p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/collectors.html" target="_blank" rel="noopener">官方文档</a></p>
+</blockquote>
+<ul>
+<li>优先调整堆得大小让服务器自己选择</li>
+<li>如果内存小于100M，使用串行收集器</li>
+<li>如果是单核，并且没有响应时间的要求，串行或者让JVM自己选择</li>
+<li>如果允许停顿时间超过1秒，选择并行或者让JVM自己选择 </li>
+<li>如果响应时间最为重要且不能超过1秒，选择并发收集器</li>
+</ul>
+<h4 id="Parallel-CollectioCollector"><a href="#Parallel-CollectioCollector" class="headerlink" title="Parallel CollectioCollector"></a>Parallel CollectioCollector</h4><blockquote>
+<p>原理：当发现内存不够的时候，会暂停应用程序，启动多个垃圾收集线程做垃圾回收，然后在重新启动应用程序</p>
+<p>-XX：+UseParallelGC 手动开启，Server默认开启</p>
+<p>-XX：ParallelGCThreads=<n> 开启多少个GC线程  CPU&gt;8 N=5/8  CPU&lt;8 N=CPU</n></p>
+<p>-XX：MaxGCPauseMillis=<n> 最大停止时间</n></p>
+<p>-XX：GCTimeRatio=<n> 最大吞吐量</n></p>
+<p>-Xmx <n> 最大堆大小  使得垃圾收集器自适应</n></p>
+</blockquote>
+<p><img src="/2019/03/06/jvm/Parallel算法描述过程.png" alt="Parallel过程"></p>
+<h5 id="动态内存调整"><a href="#动态内存调整" class="headerlink" title="动态内存调整"></a>动态内存调整</h5><p>-XX：YoungGenerationSizeIncrement=<y> 一次调整Young区调整多大</y></p>
+<p>-XX：TenuredGenerationSizeIncrement=<t> 一次调整Old区调整多大</t></p>
+<h4 id="CMS-Collector"><a href="#CMS-Collector" class="headerlink" title="CMS Collector"></a>CMS Collector</h4><ul>
+<li>并发收集</li>
+<li>低停顿、低延迟</li>
+<li>老年代收集器</li>
+</ul>
+<h5 id="CMS垃圾收集过程"><a href="#CMS垃圾收集过程" class="headerlink" title="CMS垃圾收集过程"></a>CMS垃圾收集过程</h5><p><img src="/2019/03/06/jvm/CMS算法描述过程.png" alt="CMS垃圾回收算法过程"></p>
+<ol>
+<li>CMS inital makr：初始化标记Root，STW（Stop The World需要停止应用程序）</li>
+<li>CMS Concurrent Mark ：并发标记</li>
+<li>CMS remark：重新标记：STW</li>
+<li>CMS concurrent sweep：并发清除</li>
+</ol>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p><img src="/2019/03/06/jvm/CMS缺点.png" alt="CMS缺点"></p>
+<ul>
+<li>CPU敏感 抢占CPU</li>
+<li>浮动垃圾</li>
+<li>内存空间碎片</li>
+<li>Minor GC耗时增长</li>
+</ul>
+<h5 id="CMS相关参数"><a href="#CMS相关参数" class="headerlink" title="CMS相关参数"></a>CMS相关参数</h5><ul>
+<li>-XX：ConcGCTheads：并发的GC线程数</li>
+<li>-XX：+UseCMSCompactAtFullCollection：FullGC之后对内存做压缩，减少内存碎片</li>
+<li>-XX：CMSFullGCsBeforeCompaction 多少次FullGC之后压缩一次</li>
+<li>-XX：CMSInitiationOccupancyFraction  Old区占满多少存活对象时才会触发一次FullGC  官方文档中默认为92%</li>
+<li>-XX：+UseCMSInInitiatingOccupancyOnly  是否是动态可调</li>
+<li>-XX：+CMSScavengeBeforeRemark  FullGC之前是否是需要做一次YoungGC 一般会打开</li>
+<li>-XX：+CMSClassUnloadingEnabled  启用回收Perm区 JDK7以及之前</li>
+</ul>
+<h4 id="G1-Collector"><a href="#G1-Collector" class="headerlink" title="G1 Collector"></a>G1 Collector</h4><blockquote>
+<p>简介：The first focus of G1 is to provide a solution for users running applications that require large heaps with limited GC latency. This means heap sizes of around 6 GB or larger, and a stable and predictable pause time below 0.5 seconds.   —来自官网地址 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#garbage_first_garbage_collection" target="_blank" rel="noopener">Garbage-First Garbage Collector</a></p>
+<p>翻译一下：G1垃圾收集器的着重点在于为那些堆内存大和延迟小的应用程序提供解决方案，这意味着堆的大小为6G或者更大，而且稳定的暂停时间为0.5秒</p>
+<p>同时也是新生代和老生代的一个收集器</p>
+</blockquote>
+<p><img src="/2019/03/06/jvm/G1拉机器收集器图解.png" alt="G1垃圾收集器"></p>
+<blockquote>
+<p>图来自官网地址</p>
+<p>说明：</p>
+<p>G1垃圾收集器中的也有Young区和Old区的概念，不过是一个逻辑上的概念。图中将G1分为一小块一小块的regions概念。浅蓝色为Young区中，在某些情况下，深蓝色的regions区域也在同一时刻进行GC，基于幸存对象的存活年龄，会把着标深蓝色的regions标记为幸存区的对象，也就是survivor，至于标记为H的，则是一些大对象</p>
+<p>G1垃圾收集器调优地址<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc_tuning.html#g1_gc_tuning" target="_blank" rel="noopener">Garbage-First Garbage Collector Tuning</a></p>
+</blockquote>
+<p>常用参数</p>
+<ul>
+<li>-XX：+UseG1GC 开启G1</li>
+<li>-XX：G1HeapRegionSize=n  Region的大小，1-32个，最多2048个</li>
+<li>-XX：MaxGCPPauseMillis=200 最大停顿时间</li>
+<li>-XX：G1NewSizePerent、+XX：G1MaxNewSizePerent Young区占比、最大占比</li>
+</ul>
+<h5 id="YoungGC"><a href="#YoungGC" class="headerlink" title="YoungGC"></a>YoungGC</h5><ul>
+<li>新对象进入Eden区</li>
+<li>存活对象拷贝到survivor区</li>
+<li>存活时间得到年龄的阈值时，直接晋升至Old区</li>
+</ul>
+<h5 id="Mixed-GC"><a href="#Mixed-GC" class="headerlink" title="Mixed GC"></a>Mixed GC</h5><ul>
+<li>不是Full GC，回收所有的Young和部分的Old区</li>
+<li>会进行全局的并发标记</li>
+<li>时机：InitiatingHeapOccupancyPerent:堆占有率达到这个阈值时会进行触发并发标记，默认为45%</li>
+<li>G1HeapWastePerent:在全局并发标记后，可以知道多少空间要被回收，在每次YGC之后再次发生MixedGC之前，会检查垃圾占比是否达到此参数，只有达到了，下次才会发生MixedGC</li>
+</ul>
+<h5 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h5><ul>
+<li>年轻代大小：避免使用-Xmn、-XX：NewRatio等显示设置年轻代大小，会覆盖暂停时间目标</li>
+<li>暂停时间目标：暂停时间不要求太苛刻，其吞吐量目标是90%的应用程序和10%的垃圾回收时间，太苛刻会影响到吞吐量</li>
+</ul>
+<h5 id="是否需要切换到G1"><a href="#是否需要切换到G1" class="headerlink" title="是否需要切换到G1"></a>是否需要切换到G1</h5><ul>
+<li>50%以上的堆被存活对象占用</li>
+<li>对象晋升和分配的速度变化非常大</li>
+<li>垃圾回收时间特别长，超过了1秒</li>
+</ul>
+<h3 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h3><blockquote>
+<p>评价垃圾收集器的重要指标：</p>
+<ol>
+<li>吞吐量</li>
+<li>响应时间</li>
+</ol>
+<p>垃圾回收官方指南<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/toc.html" target="_blank" rel="noopener"><strong>Java Platform, Standard Edition HotSpot Virtual Machine Garbage Collection Tuning Guide</strong></a></p>
+</blockquote>
+<h4 id="可视化GC日志分析工具"><a href="#可视化GC日志分析工具" class="headerlink" title="可视化GC日志分析工具"></a>可视化GC日志分析工具</h4><p>在线工具：<a href="https://gceasy.io/" target="_blank" rel="noopener">https://gceasy.io/</a>   GCViewer</p>
+<h4 id="打印GC相关日参数"><a href="#打印GC相关日参数" class="headerlink" title="打印GC相关日参数"></a>打印GC相关日参数</h4><ul>
+<li>-XX：+PrintGCDetails  -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XXloggc:$CATALINA_HOME/logs/gc.log -XX:+PrintHeapAtGC -XX:+PrintTenuringDistribution  打印GC详细信息，打印GC的时间，设置GC日志的文件路径，打印GC时堆信息，打印GC时对象的年龄情况</li>
+<li>推荐使用GCViewer查看参数信息</li>
+</ul>
+<h4 id="可视化GC日志分析"><a href="#可视化GC日志分析" class="headerlink" title="可视化GC日志分析"></a>可视化GC日志分析</h4><p>GC调优步骤：</p>
+<ol>
+<li>打印GC日志</li>
+<li>根据日志得到关键性能指标</li>
+<li>分析GC原因，调优JVM参数</li>
+</ol>
+<ul>
+<li><p>初始化设置</p>
+<ul>
+<li>-XX:+DisableExplicitGC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$CATALINA_HOME/logs/ -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XXloggc:CATALINA_HOME/logs/gc.log </li>
+</ul>
+</li>
+</ul>
+<h4 id="Parallel-GC调优的指导原则"><a href="#Parallel-GC调优的指导原则" class="headerlink" title="Parallel GC调优的指导原则"></a>Parallel GC调优的指导原则</h4><blockquote>
+<p> <strong>Tuning Strategy</strong>(调优策略)</p>
+<p>Do not choose a maximum value for the heap unless you know that you need a heap greater than the default maximum heap size. Choose a throughput goal that is sufficient for your application.</p>
+<p>The heap will grow or shrink to a size that will support the chosen throughput goal. A change in the application’s behavior can cause the heap to grow or shrink. For example, if the application starts allocating at a higher rate, the heap will grow to maintain the same throughput.</p>
+<p>If the heap grows to its maximum size and the throughput goal is not being met, the maximum heap size is too small for the throughput goal. Set the maximum heap size to a value that is close to the total physical memory on the platform but which does not cause swapping of the application. Execute the application again. If the throughput goal is still not met, then the goal for the application time is too high for the available memory on the platform.</p>
+<p>If the throughput goal can be met, but there are pauses that are too long, then select a maximum pause time goal. Choosing a maximum pause time goal may mean that your throughput goal will not be met, so choose values that are an acceptable compromise for the application.</p>
+<p>It is typical that the size of the heap will oscillate as the garbage collector tries to satisfy competing goals. This is true even if the application has reached a steady state. The pressure to achieve a throughput goal (which may require a larger heap) competes with the goals for a maximum pause time and a minimum footprint (which both may require a small heap).</p>
+<p>——来源<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/ergonomics.html#ergonomics" target="_blank" rel="noopener">官网Ergonomics</a></p>
+</blockquote>
+<ul>
+<li><p>除非确定，否则不要设置最大堆内存</p>
+</li>
+<li><p>优先设置吞吐量目标</p>
+</li>
+<li><p>如果吞吐量目标达不到，调大最大内存，不能让OS使用Swap，如果仍然达不到，降低目标</p>
+</li>
+<li><p>吞吐量达到，GC时间太长，设置停顿时间目标</p>
+</li>
+</ul>
+<h4 id="G1调优指导"><a href="#G1调优指导" class="headerlink" title="G1调优指导"></a>G1调优指导</h4><blockquote>
+<p> <strong>Recommendations</strong></p>
+<p>When you evaluate and fine-tune G1 GC, keep the following recommendations in mind:</p>
+<ul>
+<li><strong>Young Generation Size</strong>: Avoid explicitly setting young generation size with the <code>-Xmn</code> option or any or other related option such as <code>-XX:NewRatio</code>. Fixing the size of the young generation overrides the target pause-time goal.</li>
+<li><strong>Pause Time Goals</strong>: When you evaluate or tune any garbage collection, there is always a latency versus throughput trade-off. The G1 GC is an incremental garbage collector with uniform pauses, but also more overhead on the application threads. The throughput goal for the G1 GC is 90 percent application time and 10 percent garbage collection time. Compare this to the Java HotSpot VM parallel collector. The throughput goal of the parallel collector is 99 percent application time and 1 percent garbage collection time. Therefore, when you evaluate the G1 GC for throughput, relax your pause time target. Setting too aggressive a goal indicates that you are willing to bear an increase in garbage collection overhead, which has a direct effect on throughput. When you evaluate the G1 GC for latency, you set your desired (soft) real-time goal, and the G1 GC will try to meet it. As a side effect, throughput may suffer. See the section <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#pause_time_goal" target="_blank" rel="noopener">Pause Time Goal</a> in <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc.html#garbage_first_garbage_collection" target="_blank" rel="noopener">Garbage-First Garbage Collector</a> for additional information.</li>
+<li><strong>Taming Mixed Garbage Collections</strong>: Experiment with the following options when you tune mixed garbage collections. See the section <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc_tuning.html#important_defaults" target="_blank" rel="noopener">Important Defaults</a> for information about these options:<ul>
+<li><code>-XX:InitiatingHeapOccupancyPercent</code>: Use to change the marking threshold.</li>
+<li><code>-XX:G1MixedGCLiveThresholdPercent</code> and <code>-XX:G1HeapWastePercent</code>: Use to change the mixed garbage collection decisions.</li>
+<li><code>-XX:G1MixedGCCountTarget</code> and <code>-XX:G1OldCSetRegionThresholdPercent</code>: Use to adjust the CSet for old regions.</li>
+</ul>
+</li>
+</ul>
+<p>— 来源<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gctuning/g1_gc_tuning.html#g1_gc_tuning" target="_blank" rel="noopener">官网</a></p>
+</blockquote>
+<ul>
+<li>年轻代大小：避免使用-Xmn、-XX:NewRatio等显示设置Young区大小，会覆盖暂停时间目标</li>
+<li>暂停时间目标：暂停时间不要求太苛刻，其吞吐量目标是90%的应用程序和10%的垃圾回收时间，太苛刻会影响到吞吐量</li>
+<li>关于Mixed GC参数调优</li>
+</ul>
+<h2 id="Java代码层优化"><a href="#Java代码层优化" class="headerlink" title="Java代码层优化"></a>Java代码层优化</h2><h3 id="jvm字节码指令与javap"><a href="#jvm字节码指令与javap" class="headerlink" title="jvm字节码指令与javap"></a>jvm字节码指令与javap</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]# javap</span><br><span class="line">用法: javap &lt;options&gt; &lt;classes&gt;</span><br><span class="line">其中, 可能的选项包括:</span><br><span class="line">  -help  --help  -?        输出此用法消息</span><br><span class="line">  -version                 版本信息</span><br><span class="line">  -v  -verbose             输出附加信息</span><br><span class="line">  -l                       输出行号和本地变量表</span><br><span class="line">  -public                  仅显示公共类和成员</span><br><span class="line">  -protected               显示受保护的/公共类和成员</span><br><span class="line">  -package                 显示程序包/受保护的/公共类</span><br><span class="line">                           和成员 (默认)</span><br><span class="line">  -p  -private             显示所有类和成员</span><br><span class="line">  -c                       对代码进行反汇编</span><br><span class="line">  -s                       输出内部类型签名</span><br><span class="line">  -sysinfo                 显示正在处理的类的</span><br><span class="line">                           系统信息 (路径, 大小, 日期, MD5 散列)</span><br><span class="line">  -constants               显示最终常量</span><br><span class="line">  -classpath &lt;path&gt;        指定查找用户类文件的位置</span><br><span class="line">  -cp &lt;path&gt;               指定查找用户类文件的位置</span><br><span class="line">  -bootclasspath &lt;path&gt;    覆盖引导类文件的位置</span><br></pre></td></tr></table></figure>
 <p>实例说明：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.studio;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Li</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test1</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a=<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">int</span> b=<span class="number">3</span>;</span><br><span class="line">		<span class="keyword">int</span> c = a + b;</span><br><span class="line">		System.out.println(c);</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">Classfile /F:/studio/studio/target/classes/com/studio/Test1.class</span></span><br><span class="line"><span class="comment">  Last modified 2018-11-13; size 571 bytes</span></span><br><span class="line"><span class="comment">  MD5 checksum 6f1929ef65d0a971d16e9c66097fabef</span></span><br><span class="line"><span class="comment">  Compiled from "Test1.java"</span></span><br><span class="line"><span class="comment">public class com.studio.Test1</span></span><br><span class="line"><span class="comment">  minor version: 0</span></span><br><span class="line"><span class="comment">  major version: 52</span></span><br><span class="line"><span class="comment">  flags: ACC_PUBLIC, ACC_SUPER</span></span><br><span class="line"><span class="comment">Constant pool:</span></span><br><span class="line"><span class="comment">   #1 = Methodref          #5.#23         // java/lang/Object."&lt;init&gt;":()V</span></span><br><span class="line"><span class="comment">   #2 = Fieldref           #24.#25        // java/lang/System.out:Ljava/io/PrintStream;</span></span><br><span class="line"><span class="comment">   #3 = Methodref          #26.#27        // java/io/PrintStream.println:(I)V</span></span><br><span class="line"><span class="comment">   #4 = Class              #28            // com/studio/Test1</span></span><br><span class="line"><span class="comment">   #5 = Class              #29            // java/lang/Object</span></span><br><span class="line"><span class="comment">   #6 = Utf8               &lt;init&gt;</span></span><br><span class="line"><span class="comment">   #7 = Utf8               ()V</span></span><br><span class="line"><span class="comment">   #8 = Utf8               Code</span></span><br><span class="line"><span class="comment">   #9 = Utf8               LineNumberTable</span></span><br><span class="line"><span class="comment">  #10 = Utf8               LocalVariableTable</span></span><br><span class="line"><span class="comment">  #11 = Utf8               this</span></span><br><span class="line"><span class="comment">  #12 = Utf8               Lcom/studio/Test1;</span></span><br><span class="line"><span class="comment">  #13 = Utf8               main</span></span><br><span class="line"><span class="comment">  #14 = Utf8               ([Ljava/lang/String;)V</span></span><br><span class="line"><span class="comment">  #15 = Utf8               args</span></span><br><span class="line"><span class="comment">  #16 = Utf8               [Ljava/lang/String;</span></span><br><span class="line"><span class="comment">  #17 = Utf8               a</span></span><br><span class="line"><span class="comment">  #18 = Utf8               I</span></span><br><span class="line"><span class="comment">  #19 = Utf8               b</span></span><br><span class="line"><span class="comment">  #20 = Utf8               c</span></span><br><span class="line"><span class="comment">  #21 = Utf8               SourceFile</span></span><br><span class="line"><span class="comment">  #22 = Utf8               Test1.java</span></span><br><span class="line"><span class="comment">  #23 = NameAndType        #6:#7          // "&lt;init&gt;":()V</span></span><br><span class="line"><span class="comment">  #24 = Class              #30            // java/lang/System</span></span><br><span class="line"><span class="comment">  #25 = NameAndType        #31:#32        // out:Ljava/io/PrintStream;</span></span><br><span class="line"><span class="comment">  #26 = Class              #33            // java/io/PrintStream</span></span><br><span class="line"><span class="comment">  #27 = NameAndType        #34:#35        // println:(I)V</span></span><br><span class="line"><span class="comment">  #28 = Utf8               com/studio/Test1</span></span><br><span class="line"><span class="comment">  #29 = Utf8               java/lang/Object</span></span><br><span class="line"><span class="comment">  #30 = Utf8               java/lang/System</span></span><br><span class="line"><span class="comment">  #31 = Utf8               out</span></span><br><span class="line"><span class="comment">  #32 = Utf8               Ljava/io/PrintStream;</span></span><br><span class="line"><span class="comment">  #33 = Utf8               java/io/PrintStream</span></span><br><span class="line"><span class="comment">  #34 = Utf8               println</span></span><br><span class="line"><span class="comment">  #35 = Utf8               (I)V</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">  public com.studio.Test1();</span></span><br><span class="line"><span class="comment">    descriptor: ()V</span></span><br><span class="line"><span class="comment">    flags: ACC_PUBLIC</span></span><br><span class="line"><span class="comment">    Code:</span></span><br><span class="line"><span class="comment">      stack=1, locals=1, args_size=1</span></span><br><span class="line"><span class="comment">         0: aload_0</span></span><br><span class="line"><span class="comment">         1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span></span><br><span class="line"><span class="comment">         4: return</span></span><br><span class="line"><span class="comment">      LineNumberTable:</span></span><br><span class="line"><span class="comment">        line 6: 0</span></span><br><span class="line"><span class="comment">      LocalVariableTable:</span></span><br><span class="line"><span class="comment">        Start  Length  Slot  Name   Signature</span></span><br><span class="line"><span class="comment">            0       5     0  this   Lcom/studio/Test1;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">  public static void main(java.lang.String[]); </span></span><br><span class="line"><span class="comment">    descriptor: ([Ljava/lang/String;)V</span></span><br><span class="line"><span class="comment">    flags: ACC_PUBLIC, ACC_STATIC</span></span><br><span class="line"><span class="comment">    Code:</span></span><br><span class="line"><span class="comment">      stack=2, locals=4, args_size=1</span></span><br><span class="line"><span class="comment">         0: iconst_2</span></span><br><span class="line"><span class="comment">         1: istore_1</span></span><br><span class="line"><span class="comment">         2: iconst_3</span></span><br><span class="line"><span class="comment">         3: istore_2</span></span><br><span class="line"><span class="comment">         4: iload_1</span></span><br><span class="line"><span class="comment">         5: iload_2</span></span><br><span class="line"><span class="comment">         6: iadd</span></span><br><span class="line"><span class="comment">         7: istore_3</span></span><br><span class="line"><span class="comment">         8: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</span></span><br><span class="line"><span class="comment">        11: iload_3</span></span><br><span class="line"><span class="comment">        12: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V</span></span><br><span class="line"><span class="comment">        15: return</span></span><br><span class="line"><span class="comment">      LineNumberTable:</span></span><br><span class="line"><span class="comment">        line 8: 0</span></span><br><span class="line"><span class="comment">        line 9: 2</span></span><br><span class="line"><span class="comment">        line 10: 4</span></span><br><span class="line"><span class="comment">        line 11: 8</span></span><br><span class="line"><span class="comment">        line 12: 15</span></span><br><span class="line"><span class="comment">      LocalVariableTable:</span></span><br><span class="line"><span class="comment">        Start  Length  Slot  Name   Signature</span></span><br><span class="line"><span class="comment">            0      16     0  args   [Ljava/lang/String;</span></span><br><span class="line"><span class="comment">            2      14     1     a   I</span></span><br><span class="line"><span class="comment">            4      12     2     b   I</span></span><br><span class="line"><span class="comment">            8       8     3     c   I</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">SourceFile: "Test1.java"</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line">	<span class="comment">/***</span></span><br><span class="line"><span class="comment">	 public static void main(java.lang.String);</span></span><br><span class="line"><span class="comment">	 descriptor: (Ljava/lang/String;)V</span></span><br><span class="line"><span class="comment">	 flags: ACC_PUBLIC, ACC_STATIC</span></span><br><span class="line"><span class="comment">	 Code:</span></span><br><span class="line"><span class="comment">	 # stack 操作数栈的深度2</span></span><br><span class="line"><span class="comment">	 # locals 本地变量表最大长度（slot为单位），64位的是2，其他是1，索引从0开始，如果是非static方法索引0代表this，后面是入参，后面是本地变量</span></span><br><span class="line"><span class="comment">	 # args_size 1个参数，实例方法多一个this参数</span></span><br><span class="line"><span class="comment">	 stack=2, locals=4, args_size=1</span></span><br><span class="line"><span class="comment">	 0: iconst_2  #常量2压栈</span></span><br><span class="line"><span class="comment">	 1: istore_1  #出栈保存到本地变量1里面</span></span><br><span class="line"><span class="comment">	 2: iconst_3  #常量3压栈</span></span><br><span class="line"><span class="comment">	 3: istore_2  #出栈保存到本地变量2里面</span></span><br><span class="line"><span class="comment">	 4: iload_1    #局部变量1压栈</span></span><br><span class="line"><span class="comment">	 5: iload_2    #局部变量2压栈</span></span><br><span class="line"><span class="comment">	 6: iadd        # 栈顶两个元素相加，计算结果压栈</span></span><br><span class="line"><span class="comment">	 7: istore_3  # 出栈保存到局部变量3里面</span></span><br><span class="line"><span class="comment">	 8: getstatic     #16                 // Field java/lang/System.out:Ljava/io/PrintStream;</span></span><br><span class="line"><span class="comment">	 11: iload_3</span></span><br><span class="line"><span class="comment">	 12: invokevirtual #22                 // Method java/io/PrintStream.println:(I)V</span></span><br><span class="line"><span class="comment">	 15: return</span></span><br><span class="line"><span class="comment">	 LineNumberTable:</span></span><br><span class="line"><span class="comment">	 line 5: 0</span></span><br><span class="line"><span class="comment">	 line 6: 2</span></span><br><span class="line"><span class="comment">	 line 7: 4</span></span><br><span class="line"><span class="comment">	 line 8: 8</span></span><br><span class="line"><span class="comment">	 line 9: 15</span></span><br><span class="line"><span class="comment">	 LocalVariableTable:</span></span><br><span class="line"><span class="comment">	 Start  Length  Slot  Name   Signature</span></span><br><span class="line"><span class="comment">	 0      16     0  args   Ljava/lang/String;</span></span><br><span class="line"><span class="comment">	 2      14     1     a   I</span></span><br><span class="line"><span class="comment">	 4      12     2     b   I</span></span><br><span class="line"><span class="comment">	 8       8     3     c   I</span></span><br><span class="line"><span class="comment">	 **/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -607,6 +845,9 @@
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -701,7 +942,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java生产环境下性能监控与调优详解"><span class="nav-number">1.</span> <span class="nav-text">Java生产环境下性能监控与调优详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于JDK命令行工具的监控"><span class="nav-number">1.1.</span> <span class="nav-text">基于JDK命令行工具的监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM参数类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">JVM参数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准参数"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">标准参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x参数-非标准化参数"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">x参数 非标准化参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xx参数"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">xx参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看JVM运行时参数"><span class="nav-number">1.1.2.</span> <span class="nav-text">查看JVM运行时参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出内存映像文件"><span class="nav-number">1.1.3.</span> <span class="nav-text">导出内存映像文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存溢出自动导出"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">内存溢出自动导出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用jmap命令导出"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">使用jmap命令导出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAT分析内存溢出"><span class="nav-number">1.1.4.</span> <span class="nav-text">MAT分析内存溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jstack"><span class="nav-number">1.1.5.</span> <span class="nav-text">jstack</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程状态"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">线程状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于JVisualVM的可视化监控"><span class="nav-number">1.2.</span> <span class="nav-text">基于JVisualVM的可视化监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监控本地Java进程"><span class="nav-number">1.2.1.</span> <span class="nav-text">监控本地Java进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控远程Java进程"><span class="nav-number">1.2.2.</span> <span class="nav-text">监控远程Java进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控远程普通Java进程"><span class="nav-number">1.2.3.</span> <span class="nav-text">监控远程普通Java进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Btrace的监控调试"><span class="nav-number">1.3.</span> <span class="nav-text">基于Btrace的监控调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">1.3.2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截构造函数、同名函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">拦截构造函数、同名函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截方法"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">拦截方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截时机"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">拦截时机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截this、参数、返回值"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">拦截this、参数、返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat的性能监控与调优"><span class="nav-number">1.4.</span> <span class="nav-text">Tomcat的性能监控与调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat远程debug"><span class="nav-number">1.4.1.</span> <span class="nav-text">tomcat远程debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat-manager监控"><span class="nav-number">1.4.2.</span> <span class="nav-text">tomcat-manager监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#psi-probe监控"><span class="nav-number">1.4.3.</span> <span class="nav-text">psi-probe监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat优化"><span class="nav-number">1.4.4.</span> <span class="nav-text">tomcat优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存优化"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">内存优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程优化"><span class="nav-number">1.4.4.2.</span> <span class="nav-text">线程优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置优化"><span class="nav-number">1.4.4.3.</span> <span class="nav-text">配置优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session优化"><span class="nav-number">1.4.4.4.</span> <span class="nav-text">Session优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx性能监控与调优"><span class="nav-number">1.5.</span> <span class="nav-text">Nginx性能监控与调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx-http-stub-status监控连接信息"><span class="nav-number">1.5.1.</span> <span class="nav-text">ngx_http_stub_status监控连接信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngxtop监控请求信息"><span class="nav-number">1.5.2.</span> <span class="nav-text">ngxtop监控请求信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-rrd图形化监控"><span class="nav-number">1.5.3.</span> <span class="nav-text">nginx-rrd图形化监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx优化"><span class="nav-number">1.5.4.</span> <span class="nav-text">Nginx优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM层GC调优"><span class="nav-number">1.6.</span> <span class="nav-text">JVM层GC调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM的内存结构"><span class="nav-number">1.6.1.</span> <span class="nav-text">JVM的内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时数据区"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">运行时数据区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">1.6.2.</span> <span class="nav-text">垃圾回收算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">1.6.3.</span> <span class="nav-text">垃圾收集器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化GC日志分析工具"><span class="nav-number">1.6.4.</span> <span class="nav-text">可视化GC日志分析工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat的GC调优实战"><span class="nav-number">1.6.5.</span> <span class="nav-text">Tomcat的GC调优实战</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java代码层优化"><span class="nav-number">1.7.</span> <span class="nav-text">Java代码层优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jvm字节码指令与javap"><span class="nav-number">1.7.1.</span> <span class="nav-text">jvm字节码指令与javap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#i-与-i-字符串拼接-原理"><span class="nav-number">1.7.2.</span> <span class="nav-text">i++与++i,字符串拼接+原理</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于JDK命令行工具的监控"><span class="nav-number">1.</span> <span class="nav-text">基于JDK命令行工具的监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM参数类型"><span class="nav-number">1.1.</span> <span class="nav-text">JVM参数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准参数"><span class="nav-number">1.1.1.</span> <span class="nav-text">标准参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#x参数-非标准化参数"><span class="nav-number">1.1.2.</span> <span class="nav-text">x参数 非标准化参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xx参数"><span class="nav-number">1.1.3.</span> <span class="nav-text">xx参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看JVM运行时参数"><span class="nav-number">1.2.</span> <span class="nav-text">查看JVM运行时参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出内存映像文件"><span class="nav-number">1.3.</span> <span class="nav-text">导出内存映像文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存溢出自动导出"><span class="nav-number">1.3.1.</span> <span class="nav-text">内存溢出自动导出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用jmap命令导出"><span class="nav-number">1.3.2.</span> <span class="nav-text">使用jmap命令导出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAT分析内存溢出"><span class="nav-number">1.4.</span> <span class="nav-text">MAT分析内存溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jstack"><span class="nav-number">1.5.</span> <span class="nav-text">jstack</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程状态"><span class="nav-number">1.5.1.</span> <span class="nav-text">线程状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于JVisualVM的可视化监控"><span class="nav-number">2.</span> <span class="nav-text">基于JVisualVM的可视化监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监控本地Java进程"><span class="nav-number">2.1.</span> <span class="nav-text">监控本地Java进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控远程Java进程"><span class="nav-number">2.2.</span> <span class="nav-text">监控远程Java进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控远程普通Java进程"><span class="nav-number">2.3.</span> <span class="nav-text">监控远程普通Java进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Btrace的监控调试"><span class="nav-number">3.</span> <span class="nav-text">基于Btrace的监控调试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">3.2.</span> <span class="nav-text">运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拦截构造函数、同名函数"><span class="nav-number">3.3.</span> <span class="nav-text">拦截构造函数、同名函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截方法"><span class="nav-number">3.3.1.</span> <span class="nav-text">拦截方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截时机"><span class="nav-number">3.3.2.</span> <span class="nav-text">拦截时机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截this、参数、返回值"><span class="nav-number">3.3.3.</span> <span class="nav-text">拦截this、参数、返回值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">3.3.4.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat的性能监控与调优"><span class="nav-number">4.</span> <span class="nav-text">Tomcat的性能监控与调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat远程debug"><span class="nav-number">4.1.</span> <span class="nav-text">tomcat远程debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat-manager监控"><span class="nav-number">4.2.</span> <span class="nav-text">tomcat-manager监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#psi-probe监控"><span class="nav-number">4.3.</span> <span class="nav-text">psi-probe监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tomcat优化"><span class="nav-number">4.4.</span> <span class="nav-text">tomcat优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内存优化"><span class="nav-number">4.4.1.</span> <span class="nav-text">内存优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程优化"><span class="nav-number">4.4.2.</span> <span class="nav-text">线程优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置优化"><span class="nav-number">4.4.3.</span> <span class="nav-text">配置优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session优化"><span class="nav-number">4.4.4.</span> <span class="nav-text">Session优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nginx性能监控与调优"><span class="nav-number">5.</span> <span class="nav-text">Nginx性能监控与调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ngx-http-stub-status监控连接信息"><span class="nav-number">5.1.</span> <span class="nav-text">ngx_http_stub_status监控连接信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ngxtop监控请求信息"><span class="nav-number">5.2.</span> <span class="nav-text">ngxtop监控请求信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-rrd图形化监控"><span class="nav-number">5.3.</span> <span class="nav-text">nginx-rrd图形化监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx优化"><span class="nav-number">5.4.</span> <span class="nav-text">Nginx优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM层GC调优"><span class="nav-number">6.</span> <span class="nav-text">JVM层GC调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM的内存结构"><span class="nav-number">6.1.</span> <span class="nav-text">JVM的内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#运行时数据区"><span class="nav-number">6.1.1.</span> <span class="nav-text">运行时数据区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用参数"><span class="nav-number">6.1.2.</span> <span class="nav-text">常用参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">6.2.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法"><span class="nav-number">6.2.1.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分代垃圾回收"><span class="nav-number">6.2.2.</span> <span class="nav-text">分代垃圾回收</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象分配"><span class="nav-number">6.2.3.</span> <span class="nav-text">对象分配</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">6.3.</span> <span class="nav-text">垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#并行VS并发"><span class="nav-number">6.3.1.</span> <span class="nav-text">并行VS并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#停顿时间VS吞吐量"><span class="nav-number">6.3.2.</span> <span class="nav-text">停顿时间VS吞吐量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#串行收集器"><span class="nav-number">6.3.3.</span> <span class="nav-text">串行收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并行收集器"><span class="nav-number">6.3.4.</span> <span class="nav-text">并行收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#并发收集器"><span class="nav-number">6.3.5.</span> <span class="nav-text">并发收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾收集器搭配"><span class="nav-number">6.3.6.</span> <span class="nav-text">垃圾收集器搭配</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如何选择垃圾收集器"><span class="nav-number">6.3.6.1.</span> <span class="nav-text">如何选择垃圾收集器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-CollectioCollector"><span class="nav-number">6.3.7.</span> <span class="nav-text">Parallel CollectioCollector</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动态内存调整"><span class="nav-number">6.3.7.1.</span> <span class="nav-text">动态内存调整</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CMS-Collector"><span class="nav-number">6.3.8.</span> <span class="nav-text">CMS Collector</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CMS垃圾收集过程"><span class="nav-number">6.3.8.1.</span> <span class="nav-text">CMS垃圾收集过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">6.3.8.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CMS相关参数"><span class="nav-number">6.3.8.3.</span> <span class="nav-text">CMS相关参数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#G1-Collector"><span class="nav-number">6.3.9.</span> <span class="nav-text">G1 Collector</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#YoungGC"><span class="nav-number">6.3.9.1.</span> <span class="nav-text">YoungGC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Mixed-GC"><span class="nav-number">6.3.9.2.</span> <span class="nav-text">Mixed GC</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最佳实践"><span class="nav-number">6.3.9.3.</span> <span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#是否需要切换到G1"><span class="nav-number">6.3.9.4.</span> <span class="nav-text">是否需要切换到G1</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调优"><span class="nav-number">6.4.</span> <span class="nav-text">调优</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可视化GC日志分析工具"><span class="nav-number">6.4.1.</span> <span class="nav-text">可视化GC日志分析工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#打印GC相关日参数"><span class="nav-number">6.4.2.</span> <span class="nav-text">打印GC相关日参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可视化GC日志分析"><span class="nav-number">6.4.3.</span> <span class="nav-text">可视化GC日志分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parallel-GC调优的指导原则"><span class="nav-number">6.4.4.</span> <span class="nav-text">Parallel GC调优的指导原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#G1调优指导"><span class="nav-number">6.4.5.</span> <span class="nav-text">G1调优指导</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java代码层优化"><span class="nav-number">7.</span> <span class="nav-text">Java代码层优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jvm字节码指令与javap"><span class="nav-number">7.1.</span> <span class="nav-text">jvm字节码指令与javap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#i-与-i-字符串拼接-原理"><span class="nav-number">7.2.</span> <span class="nav-text">i++与++i,字符串拼接+原理</span></a></li></ol></li></ol></div>
             
 
           </div>
