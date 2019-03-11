@@ -454,7 +454,7 @@
 <h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><blockquote>
 <p>两种方式脚本运行</p>
 <p>1、JVisualVM中添加Btrace插件，添加classpath</p>
-<p>2、使用命令行btrace \<pid> \&lt;trace_script&gt;</pid></p>
+<p>2、使用命令行btrace \<pid> \<trace_script></trace_script></pid></p>
 <p>3、在脚本加上@Btrace</p>
 </blockquote>
 <h3 id="拦截构造函数、同名函数"><a href="#拦截构造函数、同名函数" class="headerlink" title="拦截构造函数、同名函数"></a>拦截构造函数、同名函数</h3><h4 id="拦截方法"><a href="#拦截方法" class="headerlink" title="拦截方法"></a>拦截方法</h4><ol>
@@ -479,8 +479,8 @@
 </ol>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><h2 id="Tomcat的性能监控与调优"><a href="#Tomcat的性能监控与调优" class="headerlink" title="Tomcat的性能监控与调优"></a>Tomcat的性能监控与调优</h2><h3 id="tomcat远程debug"><a href="#tomcat远程debug" class="headerlink" title="tomcat远程debug"></a>tomcat远程debug</h3><blockquote>
 <p>JDWP</p>
-<p>1、修改Tomcat下面的bin的配置文件 startup.sh里面最后加入exec “\$PRGDIR”/“\$EXECUTABLE” start “$@” 改为</p>
-<p>exec “\$PRGDIR”/“\$EXECUTABLE” jpda  start “$@”  </p>
+<p>1、修改Tomcat下面的bin的配置文件 startup.sh里面最后加入exec “$PRGDIR”/“$EXECUTABLE” start “$@” 改为</p>
+<p>exec “$PRGDIR”/“$EXECUTABLE” jpda  start “$@”  </p>
 <p>2、在catalina.sh文件中JPDA_ADDRESS=”8000”为监听端口为8000</p>
 <p>3、启动Tomcat即可</p>
 </blockquote>
@@ -510,19 +510,23 @@
 <p>编译时是否编译进入 查看编译参数</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> nginx -V</span><br><span class="line"><span class="meta">&gt;</span></span><br></pre></td></tr></table></figure>
 </blockquote>
+<p>&gt;</p>
 <blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> location = /nginx_status &#123;</span><br><span class="line"><span class="meta">&gt;</span>     stub_status on;</span><br><span class="line"><span class="meta">&gt;</span>     access_log off;</span><br><span class="line"><span class="meta">&gt;</span>     allow 127.0.0.1; #只允许本机访问</span><br><span class="line"><span class="meta">&gt;</span>     deny all; # 其他拒绝</span><br><span class="line"><span class="meta">&gt;</span> &#125;</span><br><span class="line"><span class="meta">&gt;</span></span><br></pre></td></tr></table></figure>
 </blockquote>
+<p>&gt;</p>
 <blockquote>
 </blockquote>
 <h3 id="ngxtop监控请求信息"><a href="#ngxtop监控请求信息" class="headerlink" title="ngxtop监控请求信息"></a>ngxtop监控请求信息</h3><blockquote>
 <p>1、安装python-pip</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; yum install epel-release</span><br><span class="line">&gt; yum install python-pip</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<p>&gt;</p>
 <blockquote>
 <p>2、安装ngxtop</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; pip install ngxtop</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </blockquote>
+<p>&gt;</p>
 <blockquote>
 <p>官方文档地址<a href="https://github.com/lebinh/ngxtop" target="_blank" rel="noopener">https://github.com/lebinh/ngxtop</a></p>
 <p>3、使用</p>
@@ -873,6 +877,22 @@
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/10/Design-Pattern/" rel="prev" title="设计模式">
+                设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
       
@@ -948,7 +968,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -961,7 +981,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1216,6 +1236,8 @@
   
 
   
+  
+
 
   
 
