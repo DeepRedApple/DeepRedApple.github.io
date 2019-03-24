@@ -87,10 +87,15 @@
 <meta property="og:site_name" content="DeepRedApple">
 <meta property="og:description" content="这篇文章主要讲解设计模式的知识，同时通过查看类图来揭秘设计并进行debug">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-11T14:51:42.429Z">
+<meta property="og:image" content="http://yoursite.com/2019/03/10/Design-Pattern/factorymethod.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/10/Design-Pattern/abstractfactory.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/10/Design-Pattern/builder.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/10/Design-Pattern/builder-v2.png">
+<meta property="og:updated_time" content="2019-03-23T13:25:21.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式">
 <meta name="twitter:description" content="这篇文章主要讲解设计模式的知识，同时通过查看类图来揭秘设计并进行debug">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/10/Design-Pattern/factorymethod.png">
 
 
 
@@ -314,7 +319,162 @@
 <p>这篇文章主要讲解设计模式的知识，同时通过查看类图来揭秘设计并进行debug</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><h3 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h3><h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><h2 id="结构性模式"><a href="#结构性模式" class="headerlink" title="结构性模式"></a>结构性模式</h2><h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h3 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h3><h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><h2 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h2><h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><h3 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h3><h3 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h3><h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><h3 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h3><h3 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a>解释器模式</h3><h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3>
+<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><h3 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h3><blockquote>
+<p>定义：定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类，工厂方法让类的实例化推迟到子类中进行</p>
+<p>适用场景：</p>
+<ul>
+<li>创建对象需要大量重复代码</li>
+<li>客户端（应用层）不依赖于产品类实例如何被创建、实现等细节</li>
+<li>一个类通过其子类来指定创建哪个对象</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>用户只需关心所需产品对应的工厂，无须关心创建细节</li>
+<li>加入新的产品符合开闭原则，提高可扩展性</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>类的个数容易过多，增加复杂度</li>
+<li>增加系统的抽象性和理解难度</li>
+</ul>
+</blockquote>
+<p><img src="/2019/03/10/Design-Pattern/factorymethod.png" alt></p>
+<blockquote>
+<p>从以上图中，可看出，Video是一个产品对象的抽象，其子类有JavaVideo、PythonVideo、FEVideo等子类，但是还有以下VideoFactory的抽象工厂，其子类有PythonVideoFactory、JavaVideoFactory、FEVideoFactory等子类来创建Video。很方便的进行扩展和使用，只需要将一个同是VIdeo的对象继承Video，再创建其工厂继承VideoFactory即可。 </p>
+</blockquote>
+<h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><blockquote>
+<p>定义：抽象工厂模式提供了一个创建一些列相关或相互依赖对象的接口</p>
+<p>使用场景：</p>
+<ul>
+<li>客户端（应用层）不依赖于产品类实例如何被创建、实现等细节</li>
+<li>强调一系列相关的产品对象（属于同一类产品族）一起使用创建对象需要大量重复的代码</li>
+<li>提供一个产品类的库，所有的产品以同样的接口出现，从而使客户端不依赖于具体实现</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>具体产品在应用层代码隔离，无须关心创建细节</li>
+<li>将一个系列的产品族统一到一起创建</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>规定了所有可能被创建的产品集合，产品族中扩展新的产品困难，需要修改抽象工厂的接口</li>
+<li>增加了系统的抽象性和理解难度</li>
+</ul>
+</blockquote>
+<p><img src="/2019/03/10/Design-Pattern/abstractfactory.png" alt></p>
+<blockquote>
+<p>抽象工厂模式：关注的是面向抽象编程，而且主要是针对那些固定的那种产品族进行设计</p>
+</blockquote>
+<h3 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h3><blockquote>
+<p>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示</p>
+<p>特征：用户只需指定需要建造的类型就可以得到它们，建造过程及细节不需要知道</p>
+<p>适用场景：</p>
+<ul>
+<li>如果对象有一个非常复杂的内部结构（很多属性）</li>
+<li>想把复杂对象的创建和使用分离</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>封装性好，创建和使用分离</li>
+<li>扩展性好、建造类之间独立、一定程度上解耦</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>产生多余的Builder对象</li>
+<li>产品内部发生变化，建造者都要修改，成本较大</li>
+</ul>
+</blockquote>
+<p><img src="/2019/03/10/Design-Pattern/builder.png" alt></p>
+<p><img src="/2019/03/10/Design-Pattern/builder-v2.png" alt></p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><blockquote>
+<p>定义：保证一个类仅有一个实例，并提供一个全局访问点</p>
+<p>使用场景：想确保任何情况下都绝对只要一个实例</p>
+<p>优点：</p>
+<ul>
+<li>在内存里只有一个实例，减少了内存开销</li>
+<li>可以避免对资源的多重占用</li>
+<li>设置全局访问点，严格控制访问</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>没有接口，扩展困难</li>
+</ul>
+<p>重点：</p>
+<ul>
+<li>私有构造器</li>
+<li>线程安全</li>
+<li>延迟加载</li>
+<li>序列化和反序列化安全</li>
+<li>反射攻击</li>
+</ul>
+<p>使用技能：</p>
+<ul>
+<li>反编译</li>
+<li>内存原理</li>
+<li>多线程debug</li>
+</ul>
+<p>单例和相关设计模式</p>
+<ul>
+<li>单例模式和工厂模式</li>
+<li>单例模式和享元模式</li>
+</ul>
+</blockquote>
+<h3 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a>原型模式</h3><blockquote>
+<p>定义：指原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象</p>
+<p>特点：不需要知道任何创建的细节，不调用构造函数</p>
+<p>使用场景：</p>
+<ul>
+<li>类初始化消耗较多的资源</li>
+<li>new产生的一个对象需要非常繁琐的过程(数据准备、访问权限等)</li>
+<li>构造函数比较复杂</li>
+<li>循环体中产生大量对象</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>性能上比直接new一个对象性能高</li>
+<li>简化创建过程</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>必须配备克隆方法</li>
+<li>对克隆复杂对象或对克隆出的对象进行复杂改造时，容易引入风险</li>
+<li>深拷贝、浅拷贝要运用得当</li>
+</ul>
+<p>扩展：</p>
+<ul>
+<li>深克隆</li>
+<li>浅克隆</li>
+</ul>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.lzh.design.creational.prototype;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.ToString;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 直接让目标类实现克隆接口</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Li</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@ToString</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Mail</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> String emailAddress;</span><br><span class="line">	<span class="keyword">private</span> String content;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Mail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Mail Class Constructor"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> Object <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"clone mail object"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="结构性模式"><a href="#结构性模式" class="headerlink" title="结构性模式"></a>结构性模式</h2><h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><h3 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h3><h3 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h3><h3 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h3><blockquote>
+<p>定义：门面模式，提供了一个统一的接口，用来访问子系统中的一群接口。定义了一个高层接口，让子系统访问更加容易使用</p>
+<p>使用场景：</p>
+<ul>
+<li>子系统越来越复杂，增加外观模式提供简单调用接口</li>
+<li>构建多层系统结构，利用外观对象作为每层的入口，简化层间调用</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>简化了调用过程，无需了解深入子系统，防止带来风险</li>
+<li>减少系统依赖、松散耦合</li>
+<li>更好的划分访问层次</li>
+<li>符合迪米特法则，即最少知道原则</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>增加子系统、扩展子系统行为容易引入风险</li>
+<li>不符合开闭原则</li>
+</ul>
+<p>相关设计模式:</p>
+<ul>
+<li>外观模式和中介者模式</li>
+<li>外观模式和单例模式</li>
+<li>外观模式和抽象工厂模式</li>
+<li></li>
+</ul>
+</blockquote>
+<h3 id="桥接模式"><a href="#桥接模式" class="headerlink" title="桥接模式"></a>桥接模式</h3><h3 id="组合模式"><a href="#组合模式" class="headerlink" title="组合模式"></a>组合模式</h3><h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><h2 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h2><h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><h3 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h3><h3 id="备忘录模式"><a href="#备忘录模式" class="headerlink" title="备忘录模式"></a>备忘录模式</h3><h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><h3 id="中介者模式"><a href="#中介者模式" class="headerlink" title="中介者模式"></a>中介者模式</h3><h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><h3 id="访问者模式"><a href="#访问者模式" class="headerlink" title="访问者模式"></a>访问者模式</h3><h3 id="解释器模式"><a href="#解释器模式" class="headerlink" title="解释器模式"></a>解释器模式</h3><h3 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h3>
       
     </div>
     
