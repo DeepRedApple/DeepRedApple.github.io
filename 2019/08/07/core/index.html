@@ -98,6 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/标记清除算法.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/复制算法.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/标记整理算法.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/07/core/新生代与复制算法.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/GC垃圾收集器.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/Serial与Serial%20Old%20垃圾收集过程图.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/Scavenge:ParNew%20与年老代%20Serial%20Old%20搭配垃圾收集过程图.png">
@@ -285,7 +286,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/Docker概念.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/Docker%20NetWork.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/07/core/Docker网桥.png">
-<meta property="og:updated_time" content="2019-08-07T14:27:34.040Z">
+<meta property="og:updated_time" content="2019-08-07T14:40:16.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="core">
 <meta name="twitter:description" content="本文档资源最原始的来源http://www.ityouknow.com/java/2019/03/25/java-knowledge.html ，是有一位美团的大佬做的👍，我将继续在编辑和完善自己的一些知识点。💪">
@@ -572,7 +573,7 @@
 <p><img src="/2019/08/07/core/标记整理算法.png" alt>                                                                          </p>
 <h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>​        分代收集法是目前大部分 JVM 所采用的方法，其核心思想是根据对象存活的不同生命周期将内存划分为不同的域，一般情况下将 GC 堆划分为老生代(Tenured/Old Generation)和新生代(Young Generation)。老生代的特点是每次垃圾回收时只有少量对象需要被回收，新生代的特点是每次垃圾回收时都有大量垃圾需要被回收，因此可以根据不同区域选择不同的算法。</p>
 <h4 id="新生代与复制算法"><a href="#新生代与复制算法" class="headerlink" title="新生代与复制算法"></a>新生代与复制算法</h4><p>目前大部分 JVM 的 GC 对于新生代都采取 Copying 算法，因为新生代中每次垃圾回收都要 回收大部分对象，即要复制的操作比较少，但通常并不是按照 1:1 来划分新生代。一般将新生代 划分为一块较大的 Eden 空间和两个较小的 Survivor 空间(From Space, To Space)，每次使用Eden 空间和其中的一块 Survivor 空间，当进行回收时，将该两块空间中还存活的对象复制到另 一块 Survivor 空间中。</p>
-<p>![]core/新生代与复制算法.png)</p>
+<p><img src="/2019/08/07/core/新生代与复制算法.png" alt></p>
 <h4 id="老年代与标记复制算法"><a href="#老年代与标记复制算法" class="headerlink" title="老年代与标记复制算法"></a>老年代与标记复制算法</h4><p>而老年代因为每次只回收少量对象，因而采用 Mark-Compact 算法。</p>
 <ol>
 <li>JAVA 虚拟机提到过的处于方法区的永生代(Permanet Generation)，它用来存储 class 类，常量，方法描述等。对永生代的回收主要包括废弃常量和无用的类。</li>
